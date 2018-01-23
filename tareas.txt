@@ -1,0 +1,16 @@
+-Configurar compilacion React+
+-Configurar conexion a mongo y setup basico+
+-Configurar routing+
+-Configurar api de edicion de publicaciones+
+-Crear DOA de edicion de publicaciones+
+-Crear app de edicion de publicaciones
+	-Crear routing para inicio/creador+
+	-Autenticacion de usuario
+	-Vista inicial
+	-Edicion y creacion
+-Crear routing para diferentes vistas de visitante 
+	-Por etiquetas
+	-Por fechas(al principio solo mes)
+	-Por categorias
+
+-Crear vista inicial para visitantes
