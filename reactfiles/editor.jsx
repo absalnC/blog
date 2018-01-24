@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 class Editor extends React.Component{	
 	constructor(props){
 		super(props);
+		
 	}
 
 	render(){
