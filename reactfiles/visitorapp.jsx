@@ -1,14 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import{BrowserRouter as Router,browserHistory,Link} from "react-router-dom";
+import{BrowserRouter as Router,browserHistory,Link,Route} from "react-router-dom";
 import Etiquetas from "./etiquetas.jsx";
 import Entradas from "./entradas.jsx";
 import Antiguos from "./antiguos.jsx";
-
+import PostVisitor from "./postvisitor.jsx"
 class VisitorApp extends React.Component{	
 	constructor(props){
 		super(props);
 		this.state={
+			type:"default",
 			posts:[],
 			etiquetas:[],
 			categorias:[]
@@ -25,8 +26,7 @@ class VisitorApp extends React.Component{
 			method:"GET",
 			headers:{"Content-Type":"application/json"},
 		}).then((resp)=>resp.json()).then((resp)=>{
-			console.log("resp");
-			console.log(resp);
+			
 			this.updateProps(["posts"],[resp]);
 		}).catch((err)=>{
 			console.log("something went wrong");
@@ -35,11 +35,66 @@ class VisitorApp extends React.Component{
 	}
 
 	loadMonth=(ev)=>{
-
+		let lst=this.state.type=="month"?this.state.posts.length:0;
+		//console.log(`name:${ev.target.name}`);
+		fetch(`/visitor/getmonth/${ev.target.name}/${lst}`,
+			{
+				method:"GET",
+				headers:{"Content-Type":"application/json"}
+			})
+		.then(resp=>resp.json()).then(resp=>{
+			console.log("response to load month:");
+			console.log(resp);
+			if (lst==0){
+				this.updateProps(["posts"],[resp]);
+			}
+			else{
+				let temp=this.state.posts.map(el=>Object.assign({},el));
+				this.updatePRops(["posts"],[temp.concat(resp)]);
+			}
+		})
 	}
 
 	loadTag=(ev)=>{
+		console.log("loading tag");
+		let lst   =   this.state.type == "tag" ?    this.state.posts.length    :    0;
+		fetch(`/visitor/gettag/${ev.target.name}/${lst}`,
+			{
+				method:"GET",
+				headers:{"Content-Type":"application/json"}
+			})
+		.then(resp=>resp.json()).then(resp=>{
+			if (lst==0){
+				this.updateProps(["posts"],[resp]);
+			}
+			else{
+				let temp=this.state.posts.map(el=>Object.assign({},el));
+				this.updatePRops(["posts"],[temp.concat(resp)]);
+			}
+		})
+		.catch(err=>{
+			console.log("something went wrong");
+			console.log(err);
+		})
+	}
+
+	loadCath=(ev)=>{
 		
+		let lst=this.state.type=="cath"?this.state.posts.length:0;
+		fetch(`/visitor/getcathegory/${ev.target.name}/${lst}`,
+			{
+				method:"GET",
+				headers:{"Content-Type":"application/json"}
+			})
+		.then(resp=>resp.json()).then(resp=>{
+			if (lst==0){
+				this.updateProps(["posts"],[resp]);
+			}
+			else{
+				let temp=this.state.posts.map(el=>Object.assign({},el));
+				this.updatePRops(["posts"],[temp.concat(resp)]);
+			}
+		})
 	}
 
 	loadTags=()=>{
@@ -48,8 +103,7 @@ class VisitorApp extends React.Component{
 			headers:{"Content-Type":"application/json"},
 		})
 		.then((resp)=>resp.json()).then((resp)=>{
-			console.log("resp tags");
-			console.log(resp);
+			
 			this.updateProps(["etiquetas"],[resp]);
 		})
 		.catch((err)=>{
@@ -64,8 +118,7 @@ class VisitorApp extends React.Component{
 			headers:{"Content-Type":"application/json"},
 		})
 		.then((resp)=>resp.json()).then((resp)=>{
-			console.log("resp cath");
-			console.log(resp);
+			
 			this.updateProps(["categorias"],[resp]);
 		})
 		.catch((err)=>{
@@ -90,10 +143,27 @@ class VisitorApp extends React.Component{
 			
 			<Router history={browserHistory}>
 				<div>
-				<Antiguos/>
-				<Entradas posts={this.state.posts}/>
-				<Etiquetas etiqs={this.state.etiquetas} name="Etiquetas"/>
-				<Etiquetas etiqs={this.state.categorias} name="Categorias"/>
+				<Link to ="/">Inicio</Link>
+				<Route path="/" render={(props)=>(
+					<div>
+						<Antiguos load={this.loadMonth}/>
+						<Etiquetas etiqs={this.state.etiquetas} name="Etiquetas" load={this.loadTag}/>
+						<Etiquetas etiqs={this.state.categorias} name ="Categorias" load={this.loadCath}/>
+						
+					</div>
+					)}
+					/>
+				<Route path="/" exact render={props=>(<Entradas posts={this.state.posts} />)}/>
+				<Route path="/month/:id" render={props=>(<Entradas posts={this.state.posts} 	/>)}/>
+				<Route path="/etiquetas/:etiqueta" render={props=>(<Entradas posts={this.state.posts} 	/>)}/>
+
+				<Route path="/view/:id" exact render={props=>(<PostVisitor 
+					post={this.state.posts.find(
+						(el)=>{							
+							return el._id==props.match.params.id;
+						})
+				}/>)}/>
+
 				</div>
 			</Router>
 			

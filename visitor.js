@@ -16,11 +16,13 @@ visitor.get("/get/:last",(req,res)=>{
 
 
 visitor.get("/getmonth/:month/:last",(req,res)=>{
-	const months=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
-	let month=months.indexOf(req.params.last);
+	const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+	let month=months.indexOf(req.params.month);
 	let last=parseInt(req.params.last);
 	console.log("fetching from"+req.params.last+ "to ");
-	req.postdao.fetchN(last,last+5,month,(resp)=>{
+	req.postdao.fetchNMonth(last,last+5,month,(resp)=>{
+		console.log("got answer");
+		console.log(resp);
 		res.send(resp);
 	});
 });
@@ -28,10 +30,19 @@ visitor.get("/getmonth/:month/:last",(req,res)=>{
 visitor.get("/gettag/:tag/:last",(req,res)=>{
 	let last=parseInt(req.params.last);
 	console.log("fetching from"+req.params.last+ "to ");
-	req.postdao.fetchN(last,last+5,tag,(resp)=>{
+	req.postdao.fetchNTag(last,last+5,req.params.tag,(resp)=>{
 		res.send(resp);
 	});
 });
+
+visitor.get("/getcathegory/:cath/:last",(req,res)=>{
+	let last=parseInt(req.params.last);
+	console.log("fetching from"+req.params.last+ "to ");
+	req.postdao.fetchNCath(last,last+5,req.params.cath,(resp)=>{
+		res.send(resp);
+	});
+});
+
 
 visitor.get("/tags",(req,res)=>{
 	req.postdao.fetchTags((resp)=>{
@@ -45,7 +56,7 @@ visitor.get("/cathegories",(req,res)=>{
 	});
 });
 
-visitor.post("/post/",(req,res)=>{
+visitor.post("/comment/",(req,res)=>{
 	//procesar info de formulario comentario
 	comment="comment";
 	req.postdao.addComment(req.id,comment);

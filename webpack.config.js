@@ -13,12 +13,12 @@ var config = {
         }
       ]
     },
-  //entry: APP_DIR + '/editapp.jsx',
-  entry: APP_DIR + '/visitorapp.jsx',
+  entry: APP_DIR + '/editapp.jsx',
+  //entry: APP_DIR + '/visitorapp.jsx',
   output: {
     path: BUILD_DIR,
-    //filename: 'editapp.js'
-    filename:'visitorapp.js'
+    filename: 'editapp.js'
+    //filename:'visitorapp.js'
   }
 };
 

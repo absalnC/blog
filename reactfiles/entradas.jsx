@@ -1,13 +1,16 @@
 import React from "react";
+import PostView from "./postview.jsx";
+
 class Entradas extends React.Component{
 	constructor(props){
 		super(props);
 	}
+
 	render(){
 		let els=[];
 		let that = this;
 		this.props.posts.map((el)=>{
-			els.push(that.build(el))
+			els.push(<PostView key={el._id}  post={el}/>)
 
 		});
 		return(<div>
@@ -22,32 +25,7 @@ class Entradas extends React.Component{
 		
 	}
 
-	build(post){
-
-		let comms=[];
-		post.comments.map((el,ind)=>{
-			comms.push(
-			<div key={ind}>
-				{el}
-			</div>
-			)
-		})
-		return (
-			<div key={post._id}>
-				<h1>{post.title}</h1>
-				<h3>
-					{post.date}
-				</h3>
-				<div>
-					{post.content}
-
-				</div>
-				<div>
-					{post.comms}
-				</div>
-			</div>
-			)
-	}
+	
 }
 
 export default Entradas;

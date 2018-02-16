@@ -8,11 +8,16 @@
 	-Autenticacion de usuario
 	-Vista inicial+
 	-Edicion y creacion+
--Crear routing para diferentes vistas de visitante 
+-Crear routing para diferentes vistas de visitante +
 	-Por etiquetas+
 	-Por fechas(al principio solo mes)+
 	-Normal(en orden de creacion)+
-	-Por categorias
+	-Por categorias+
 
 -Anadir campos obligatorios en edicion react+
 -Anadir consultas para listar etiquetas disponibles+
+-Agregar codigo para manejar click en categoria,etiqueta y mes+
+(en ese caso actualizar posts)
+-Agregar codigo para visualizar un blog en visitor+
+-Agregar codigo para anadir comentarios
+-Estilos
