@@ -6,6 +6,7 @@ let bodyParser=require("body-parser");
 let editor=require("./editor");
 let visitor=require("./visitor");
 let dao=require("./dao");
+
 MongoClient.connect("mongodb://localhost:27017",function(err,db){
 	assert.equal(null,err);
 	console.log("set up succesfull");

@@ -8,22 +8,23 @@ import Creator from "./creator.jsx";
 class EditApp extends React.Component{
 	constructor(props){
 		super(props);
-		
+		this.current={};
 		this.state={
-			editing:{
-				currently:false,
-				title:"",
-				content:"",
-				comments:[],
-				dates:[]
-			},
+			editing:false,
 			posts:[]
 		};
 		this.getPosts();
 	}
+
+	edit=(ev)=>{
+		id=ev.target.id;
+		index=0;//buscar elemento de posts con id
+		this.current=this.posts[index];
+	}
+
 	getPosts= ()=>{
 		let that =this;
-		fetch("editor/obtain",{
+		fetch("../visitor/get/0",{
 			method:"get",
 			headers:{"Content-type":"application/json"},
 		}).then(res=>res.json()).then(function(resp){
@@ -40,7 +41,7 @@ class EditApp extends React.Component{
 			console.log(that.state.posts);		
 		}).catch(function(err){
 			console.log("something went wrong");
-			console.log(err);
+			//console.log(err);
 		});
 	}
 	render(){
@@ -57,8 +58,9 @@ class EditApp extends React.Component{
 				</div>
 				<Route path ="/creator" component={()=><Link to ="/">Cancelar</Link>}/>
 				
-				<Route path="/" exact component={()=>(<Editor entradas={this.state.posts}/>)}/>
+				<Route path="/" exact component={()=>(<Editor  entradas={this.state.posts}/>)}/>
 				<Route path="/creator" component ={() => (<Creator editing={false} />) } />
+				<Route path="/edit/:id" render ={(those) => (<Creator  editing={true} those={those} posts={this.state.posts}   />) } />
 				
 				</div>	
 			</Router>

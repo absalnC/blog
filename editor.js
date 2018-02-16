@@ -10,8 +10,15 @@ editor.get("/", (req,res)=>{
 editor.get("/obtain",(req,res)=>{
 	req.postdao.fetchN(5,(data)=>{res.json(data)});
 })
-editor.post("/update/:id",(req,res)=>{
+editor.post("/update",(req,res)=>{
 	//verificar credenciales(middleware?)
+	//en el cuerpo del mensaje se incluye el _id
+	console.log("updating to");
+	console.log(req.body);
+	req.postdao.update(req.body,function(resp){
+		console.log("done");
+		res.send(resp);
+	})
 	
 });
 
@@ -19,9 +26,7 @@ editor.post("/delete/:id",(req,res)=>{
 	//verificar credenciales
 });
 
-editor.post("/edit/:id",(req,res)=>{
-	//verificar credenciales
-});
+
 editor.post("/insert",(req,res)=>{
 	//verificar credenciales
 	console.log("request body");
