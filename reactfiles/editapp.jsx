@@ -47,21 +47,23 @@ class EditApp extends React.Component{
 	render(){
 		
 		return(
-		<div>
+		<div className="editapp">
 			<Router history={browserHistory} basename="editor">
-				<div>
-				<div>
+				<div className="">
+				<div className="nav">
 					
 					<Link to="/">Inicio del editor</Link>
 					<Link to="/creator">Crear entrada</Link>
 					
 				</div>
-				<Route path ="/creator" component={()=><Link to ="/">Cancelar</Link>}/>
-				
-				<Route path="/" exact component={()=>(<Editor  entradas={this.state.posts}/>)}/>
-				<Route path="/creator" component ={() => (<Creator editing={false} />) } />
-				<Route path="/edit/:id" render ={(those) => (<Creator  editing={true} those={those} posts={this.state.posts}   />) } />
-				
+				<div className="thething">
+					<Route path ="/creator" component={()=><Link to ="/">Cancelar</Link>}/>
+					
+					<Route path="/" exact component={()=>(<Editor  entradas={this.state.posts}/>)}/>
+					<Route path="/creator" component ={() => (<Creator editing={false} />) } />
+					<Route path="/edit/:id" render ={(those) => (<Creator  editing={true} those={those} posts={this.state.posts}   />) } />
+
+				</div>
 				</div>	
 			</Router>
 		</div>

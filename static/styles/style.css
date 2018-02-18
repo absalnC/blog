@@ -1,0 +1,41 @@
+*{
+	
+}
+
+.content{
+	display:grid;
+	grid-auto-rows:minmax(100px,auto);
+	border:solid black 1px;
+	padding:10px;
+}
+
+.editapp{
+	display:grid;
+	grid-auto-rows:minmax(3em,auto);
+	grid-gap:10px;
+	border:solid black 1px;
+	min-height:100vh;
+}
+.nav{
+	display:grid;
+	height:3em;
+	grid-template-columns:repeat(2,1fr);
+	border:solid yellow 1px;
+}
+@media(min-width:40em){
+	.content{
+		grid-template-columns:1fr 4fr ;
+	}	
+	.entradas{
+		width:70%;
+		min-height:80vh;
+		padding:10px;
+		border:solid black 1px;
+		grid-column-start:2;
+	}
+	.leftside{
+		grid-column-start:1;
+		grid-row-start:1;
+	}
+
+}

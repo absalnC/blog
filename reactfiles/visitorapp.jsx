@@ -137,33 +137,37 @@ class VisitorApp extends React.Component{
 
 	render(){
 		return(
-			<div>
+			<div className="app">
 
 			<h1>Welcome visitor, this is my blog, have fun</h1>
 			
 			<Router history={browserHistory}>
-				<div>
-				<Link to ="/">Inicio</Link>
-				<Route path="/" render={(props)=>(
-					<div>
-						<Antiguos load={this.loadMonth}/>
-						<Etiquetas etiqs={this.state.etiquetas} name="Etiquetas" load={this.loadTag}/>
-						<Etiquetas etiqs={this.state.categorias} name ="Categorias" load={this.loadCath}/>
+
+				<div className="router">
+					<Link to ="/">Inicio</Link>
+					<div className="content">
+						
+						<Route path="/" exact render={props=>(<Entradas posts={this.state.posts} />)}/>
+						<Route path="/month/:id" render={props=>(<Entradas posts={this.state.posts} 	/>)}/>
+						<Route path="/etiquetas/:etiqueta" render={props=>(<Entradas posts={this.state.posts} 	/>)}/>
+
+						<Route path="/view/:id" exact render={props=>(<PostVisitor 
+							post={this.state.posts.find(
+								(el)=>{							
+									return el._id==props.match.params.id;
+								})
+						}/>)}/>
+						<Route path="/" render={(props)=>(
+							<div className="leftside">
+								<Antiguos load={this.loadMonth}/>
+								<Etiquetas etiqs={this.state.etiquetas} name="Etiquetas" load={this.loadTag}/>
+								<Etiquetas etiqs={this.state.categorias} name ="Categorias" load={this.loadCath}/>
+								
+							</div>
+							)}
+							/>
 						
 					</div>
-					)}
-					/>
-				<Route path="/" exact render={props=>(<Entradas posts={this.state.posts} />)}/>
-				<Route path="/month/:id" render={props=>(<Entradas posts={this.state.posts} 	/>)}/>
-				<Route path="/etiquetas/:etiqueta" render={props=>(<Entradas posts={this.state.posts} 	/>)}/>
-
-				<Route path="/view/:id" exact render={props=>(<PostVisitor 
-					post={this.state.posts.find(
-						(el)=>{							
-							return el._id==props.match.params.id;
-						})
-				}/>)}/>
-
 				</div>
 			</Router>
 			

@@ -15,7 +15,7 @@ class Antiguos extends React.Component{
 			els.push(<li  key={ind} ><Link to={"/month/"+el} onClick={this.props.load} name={el}>{el}</Link></li>)
 		})
 		return(
-			<div>
+			<div className="antiguos">
 			<h1>Antiguos</h1>
 			<ul>
 				{els}				

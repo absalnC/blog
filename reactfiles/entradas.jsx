@@ -13,7 +13,7 @@ class Entradas extends React.Component{
 			els.push(<PostView key={el._id}  post={el}/>)
 
 		});
-		return(<div>
+		return(<div className="entradas">
 			<h1>Entradas</h1>
 			{els}
 			<button>

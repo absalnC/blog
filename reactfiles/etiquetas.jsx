@@ -34,7 +34,7 @@ class Etiquetas extends React.Component{
 		this.state.etiqs.map((el,ind)=>{
 			els.push(<li key={ind}><Link to={"/etiquetas/"+el} onClick={this.props.load} name={el}>{el}</Link></li>)
 		})
-		return(<div>
+		return(<div  className={this.props.name}>
 			<h1>{this.props.name}</h1>
 			<ul>
 				{els}
